@@ -24,4 +24,9 @@ public class ControllerUser {
         LoginResponseDTO userResponse = authService.login(value);
         return ResponseEntity.ok(userService.list(userResponse));
     }
+    @PostMapping("/defineRole")
+    public ResponseEntity<LoginResponseDTO> defineRole(@RequestBody UpdateInputDTO value) {
+        LoginResponseDTO request = authService.login(value.getRequest());
+        return ResponseEntity.ok(userService.defineRole(request, value.getValue(), value.getRoleRequest()));
+    }
 }

@@ -9,7 +9,6 @@ import com.login.API_login.util.Validator;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class UserService {
 			throw new RegisteredUserException("erro interno ao acessar o banco de dados");
 		}
 	}
-	public LoginResponseDTO defineRole(LoginInputDTO request, LoginInputDTO value, String role) {
+	public LoginResponseDTO defineRole(LoginResponseDTO request, LoginResponseDTO value, String role) {
 		try {	
 			User user1 = new User(-1, request.getEmail(), null, -1),
 				 user2 = new User(-1, value.getEmail(), null, -1);		

@@ -7,8 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UpdateInputDTO {
-    TokenResponseDTO request;
-    LoginResponseDTO value;
-    String roleRequest;
+public class ApiErrorDTO {
+    String date;
+    int status;
+    String error;
+    String message;
 }

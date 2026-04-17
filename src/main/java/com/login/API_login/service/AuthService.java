@@ -56,7 +56,7 @@ public class AuthService {
 			return new LoginResponseDTO(claims.getSubject(), token.getRole());
 		}
 		catch (JwtException e) {
-			throw new InvalidTokenException(e.getMessage());
+			throw new InvalidTokenException("token expirado");
 		}
 	}
 }
