@@ -65,6 +65,14 @@ public class DaoUser implements Dao<User> {
 			pstm.execute();
 		}
 	}
+	public void deleteToken(User value) throws SQLException {
+		try (
+			Connection conn = Access.getAccess();
+			PreparedStatement pstm = conn.prepareStatement("delete ")
+		) {
+
+		}
+	}
 	public String getToken(User value) throws SQLException {
 		try (
 			Connection conn = Access.getAccess();

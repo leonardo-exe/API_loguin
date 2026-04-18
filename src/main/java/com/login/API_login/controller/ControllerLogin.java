@@ -32,10 +32,8 @@ public class ControllerLogin {
     public void recoverPassword(@RequestBody LoginInputDTO value) {
         emailService.recoverPassword(value.getEmail());
     }
-    @GetMapping("/recover")
-    public ResponseEntity<TokenResponseDTO> recoverPassword(@RequestBody CodAuthenticatorDTO value) {
-        LoginInputDTO login = userService.newPassword(value);
-        TokenResponseDTO token = authService.login(login);
-        return ResponseEntity.ok(token);
+    @PutMapping("/recover")
+    public void recoverPassword(@RequestBody CodAuthenticatorDTO value) {
+        userService.newPassword(value);
     }
 }

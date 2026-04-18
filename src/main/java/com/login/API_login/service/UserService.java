@@ -27,7 +27,7 @@ public class UserService {
 				return true;
 		return false;
 	}
-	public LoginResponseDTO register(LoginInputDTO value) {
+	public void register(LoginInputDTO value) {
 		try {
 			if (!Validator.validateEmail(value.getEmail()))
 				throw new InvalidEmailException("invalid email");
@@ -37,7 +37,7 @@ public class UserService {
 			String hash = BCrypt.hashpw(value.getPassword(), BCrypt.gensalt());
 			User user = new User(-1, value.getEmail(), hash, 1);
 			daoU.insert(user);
-			return new LoginResponseDTO(user.getEmail(), "User");
+			new LoginResponseDTO(user.getEmail(), "User");
 		}
 		catch (SQLException e) {
 			throw new RegisteredUserException("internal error accessing database");
@@ -105,7 +105,7 @@ public class UserService {
 			throw new RegisteredUserException("internal error accessing database");
 		}
 	}
-	public LoginInputDTO newPassword(CodAuthenticatorDTO value) {
+	public void newPassword(CodAuthenticatorDTO value) {
 		try {
 			User user = new User(-1, value.getUser().getEmail(), null, -1);
 			user = daoU.query(daoU.queryId(user));
@@ -118,7 +118,9 @@ public class UserService {
 				throw new InvalidTokenException("invalid code");
 			user.setPassword(BCrypt.hashpw(value.getUser().getPassword(), BCrypt.gensalt()));
 			daoU.updatePassword(user);
-			return new LoginInputDTO(user.getEmail(), value.getUser().getPassword());
+			user.setPassword(null);
+			daoU.recoverToken(user);
+			new LoginInputDTO(user.getEmail(), value.getUser().getPassword());
 		}
 		catch (SQLException e) {
 			throw new RegisteredUserException("internal error accessing database");
