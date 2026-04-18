@@ -12,11 +12,11 @@ public class DaoUser implements Dao<User> {
 	@Override
 	public void insert(User value) throws SQLException {
 		try (
-                Connection conn = Access.getAccess();
-                PreparedStatement pstm = conn.prepareStatement("""
-				insert into users (email, password, id_role)
-				values (?, ?, ?)
-				""")
+			Connection conn = Access.getAccess();
+			PreparedStatement pstm = conn.prepareStatement("""
+			insert into users (email, password, id_role)
+			values (?, ?, ?)
+			""")
 		) {
 			pstm.setString(1, value.getEmail());
 			pstm.setString(2, value.getPassword());
@@ -43,6 +43,39 @@ public class DaoUser implements Dao<User> {
 			pstm.setInt(1, id_role);
 			pstm.setInt(2, value.getId());
 			pstm.execute();
+		}
+	}
+	public void updatePassword(User value) throws SQLException {
+		try (
+			Connection conn = Access.getAccess();
+			PreparedStatement pstm = conn.prepareStatement("update users set password = ? where id = ?")
+		) {
+			pstm.setString(1, value.getPassword());
+			pstm.setInt(2, value.getId());
+			pstm.execute();
+		}
+	}
+	public void recoverToken(User value) throws SQLException {
+		try (
+			Connection conn = Access.getAccess();
+			PreparedStatement pstm = conn.prepareStatement("update users set recover_token = ? where email = ?")
+		) {
+			pstm.setString(1, value.getPassword());
+			pstm.setString(2, value.getEmail());
+			pstm.execute();
+		}
+	}
+	public String getToken(User value) throws SQLException {
+		try (
+			Connection conn = Access.getAccess();
+			PreparedStatement pstm = conn.prepareStatement("select recover_token from users where id = ?")
+		) {
+			pstm.setInt(1, value.getId());
+			try (ResultSet rs = pstm.executeQuery()) {
+				if (rs.next())
+					return rs.getString("recover_token");
+				return "";
+			}
 		}
 	}
 	@Override

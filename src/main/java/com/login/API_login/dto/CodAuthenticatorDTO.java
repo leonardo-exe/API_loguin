@@ -1,4 +1,4 @@
-package com.login.API_login.model;
+package com.login.API_login.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Permission {
-    int id;
-    String permission;
+public class CodAuthenticatorDTO {
+    String cod;
+    LoginInputDTO user;
 }

@@ -3,7 +3,6 @@ package com.login.API_login.controller;
 import com.login.API_login.dto.*;
 import com.login.API_login.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +29,13 @@ public class ControllerLogin {
         return ResponseEntity.ok(authService.login(value));
     }
     @PostMapping("/recover")
-    public ResponseEntity<String> recoverPassword(@RequestBody LoginInputDTO value) {
-        return null;
+    public void recoverPassword(@RequestBody LoginInputDTO value) {
+        emailService.recoverPassword(value.getEmail());
+    }
+    @GetMapping("/recover")
+    public ResponseEntity<TokenResponseDTO> recoverPassword(@RequestBody CodAuthenticatorDTO value) {
+        LoginInputDTO login = userService.newPassword(value);
+        TokenResponseDTO token = authService.login(login);
+        return ResponseEntity.ok(token);
     }
 }
