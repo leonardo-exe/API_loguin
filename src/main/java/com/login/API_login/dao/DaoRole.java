@@ -7,20 +7,33 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * @implNote Dao.
+ * Classe DAO (Data Access Object) responsável por todas as operações de manipulação da tabela roles.
+ */
 @Repository
 public class DaoRole implements Dao<Role> {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void insert(Role value) throws SQLException {
 		try (
-                Connection conn = Access.getAccess();
-                PreparedStatement pstm = conn.prepareStatement("""
-				insert into roles (role)
-				values (?)
-				""")
+            Connection conn = Access.getAccess();
+            PreparedStatement pstm = conn.prepareStatement("""
+			insert into roles (role)
+			values (?)
+			""")
 		) {
 			pstm.setString(1, value.getRole());
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void delete(Role value) throws SQLException {
 		try (
@@ -32,6 +45,10 @@ public class DaoRole implements Dao<Role> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Role query(int id) throws SQLException {
 		try (
@@ -46,6 +63,10 @@ public class DaoRole implements Dao<Role> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int queryId(Role value) throws SQLException {
 		try (
@@ -60,6 +81,10 @@ public class DaoRole implements Dao<Role> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Role> queryAll() throws SQLException {
 		try (
@@ -74,41 +99,19 @@ public class DaoRole implements Dao<Role> {
 			return list;
 		}
 	}
-	public void AddPermissionForRole(int id_role, int id_permission) throws SQLException {
-		try (
-			Connection conn = Access.getAccess();
-			PreparedStatement pstm = conn.prepareStatement("""
-				insert into relations (id_role, id_permission)
-				values (?, ?)
-				""")
-		) {	
-			if (id_role == -1 || id_permission == -1)
-				return;
-			pstm.setInt(1, id_role);
-			pstm.setInt(2, id_permission);
-			pstm.execute();
-		}
-	}
-	public void deletePermissionForRole(int id_role, int id_permission) throws SQLException {
-		try (
-			Connection conn = Access.getAccess();
-			PreparedStatement pstm = conn.prepareStatement("""
-				delete from relations
-				where id_role = ? and id_permission = ?
-				""")
-		) {
-			if (id_role == -1 || id_permission == -1)
-				return;
-			pstm.setInt(1, id_role);
-			pstm.setInt(2, id_permission);
-			pstm.execute();
-		}
-	}
+
+	/**
+	 * Função que busca todas as permissions disponíveis para a role especificada.
+	 * @param id Chave primária da role na tabela.
+	 * @return List de elementos Permission contendo as permissions da role especificada.
+	 * @throws SQLException Erro ao acessar o banco de dados.
+	 */
 	public List<Permission> queryPermissionForRole(int id) throws SQLException {
 		try (
-			Connection conn = Access.getAccess();
-			PreparedStatement pstm = conn.prepareStatement("""
-				SELECT p.id, p.permission
+				Connection conn = Access.getAccess();
+				PreparedStatement pstm = conn.prepareStatement("""
+				
+						SELECT p.id, p.permission
 				FROM permissions p
 				INNER JOIN relations r
 				ON p.id = r.id_permission
@@ -125,6 +128,13 @@ public class DaoRole implements Dao<Role> {
 			}
 		}
 	}
+
+	/**
+	 * Função que transforma uma chave primária de uma role em sua respectiva String.
+	 * @param id Chave primária da role na tabela.
+	 * @return String com o nome da role.
+	 * @throws SQLException Erro ao acessar o banco de dados.
+	 */
 	public String queryRoleForId(int id) throws SQLException {
 		try (
 			Connection conn = Access.getAccess();

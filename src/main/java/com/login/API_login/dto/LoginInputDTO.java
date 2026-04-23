@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Estrutura recebida ao conectar um usuário.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

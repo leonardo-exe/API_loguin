@@ -7,8 +7,16 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * @implNote Dao.
+ * Classe DAO (Data Access Object) responsável por todas as operações de manipulação da tabela users.
+ */
 @Repository
 public class DaoUser implements Dao<User> {
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void insert(User value) throws SQLException {
 		try (
@@ -24,6 +32,10 @@ public class DaoUser implements Dao<User> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void delete(User value) throws SQLException {
 		try (
@@ -35,6 +47,13 @@ public class DaoUser implements Dao<User> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * Função que altera a role do usuário no banco de dados.
+	 * @param value Classe que abstrai um usuário na tabela.
+	 * @param id_role Chave primária da role desejada.
+	 * @throws SQLException Erro ao acessar o banco de dados.
+	 */
 	public void updateRole(User value, int id_role) throws SQLException {
 		try (
 			Connection conn = Access.getAccess();
@@ -45,6 +64,12 @@ public class DaoUser implements Dao<User> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * Função que altera a senha do usuário no banco de dados.
+	 * @param value Classe que abstrai um usuário na tabela.
+	 * @throws SQLException Erro ao acessar o banco de dados.
+	 */
 	public void updatePassword(User value) throws SQLException {
 		try (
 			Connection conn = Access.getAccess();
@@ -55,6 +80,12 @@ public class DaoUser implements Dao<User> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * Função que seta um token de autenticação que será lido mais tarde.
+	 * @param value Classe que abstrai um usuário na tabela.
+	 * @throws SQLException Erro ao acessar o banco de dados.
+	 */
 	public void recoverToken(User value) throws SQLException {
 		try (
 			Connection conn = Access.getAccess();
@@ -65,14 +96,13 @@ public class DaoUser implements Dao<User> {
 			pstm.execute();
 		}
 	}
-	public void deleteToken(User value) throws SQLException {
-		try (
-			Connection conn = Access.getAccess();
-			PreparedStatement pstm = conn.prepareStatement("delete ")
-		) {
 
-		}
-	}
+	/**
+	 * Função que retorna o token setado na linha do usuário no banco de dados.
+	 * @param value Classe que abstrai um usuário na tabela.
+	 * @return String que representa o token ou String vazia caso ele não exista.
+	 * @throws SQLException Erro ao acessar o banco de dados.
+	 */
 	public String getToken(User value) throws SQLException {
 		try (
 			Connection conn = Access.getAccess();
@@ -86,6 +116,10 @@ public class DaoUser implements Dao<User> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User query(int id) throws SQLException {
 		try (
@@ -100,6 +134,10 @@ public class DaoUser implements Dao<User> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int queryId(User value) throws SQLException {
 		try (
@@ -114,6 +152,10 @@ public class DaoUser implements Dao<User> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<User> queryAll() throws SQLException {
 		try (

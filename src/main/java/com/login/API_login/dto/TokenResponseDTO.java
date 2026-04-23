@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Estrutura que retorna o token de acesso temporário para o usuário.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

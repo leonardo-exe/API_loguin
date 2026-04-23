@@ -8,8 +8,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @implNote Dao.
+ * Classe DAO (Data Access Object) responsável por todas as operações de manipulação da tabela permissions.
+ */
 @Repository
 public class DaoPermission implements Dao<Permission> {
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public void insert(Permission value) throws SQLException {
 		try (
@@ -23,6 +31,10 @@ public class DaoPermission implements Dao<Permission> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void delete(Permission value) throws SQLException {
 		try (
@@ -37,6 +49,10 @@ public class DaoPermission implements Dao<Permission> {
 			pstm.execute();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Permission query(int id) throws SQLException {
 		try (
@@ -51,6 +67,10 @@ public class DaoPermission implements Dao<Permission> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int queryId(Permission value) throws SQLException {
 		try (
@@ -65,6 +85,10 @@ public class DaoPermission implements Dao<Permission> {
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Permission> queryAll() throws SQLException {
 		try (

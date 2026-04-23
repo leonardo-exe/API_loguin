@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Classe responsável por abstrair uma linha da tabela users.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
